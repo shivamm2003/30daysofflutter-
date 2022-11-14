@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 int days = 20 ;
 String name = "Codepur";
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
