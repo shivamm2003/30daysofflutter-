@@ -7,7 +7,10 @@ import 'Pages/Home_Page.dart';
 import 'Pages/Login_page.dart';
 import 'package:flutter_catalog/widgets/drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_catalog/models/catalog.dart';
+import 'package:flutter_catalog/widgets/item_widget.dart';
 
+// to find the type of any thing tyoe context.runtimetype.to string(a)
 void main() {
   // by giving _ in front of variable the variable becames private
   runApp(MyApp());
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       themeMode: ThemeMode.light,
-      theme: MyTheme.lighttheme(context),// syntax to add file of theme 
+      theme: MyTheme.lighttheme(context), // syntax to add file of theme
       darkTheme: MyTheme.darktheme(context),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
