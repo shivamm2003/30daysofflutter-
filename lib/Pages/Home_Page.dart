@@ -7,6 +7,7 @@ import 'dart:convert'; // gives json decoder and encoder , to decode json file
 import 'package:flutter_catalog/models/catalog.dart';
 import 'package:flutter_catalog/widgets/drawer.dart';
 import 'package:flutter_catalog/widgets/item_widget.dart';
+// import 'package:flutter_catalog/models/jsonconvert.dart';
 
 int days = 20;
 String name = "Codepur";
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState() { 
+  void initState() {
     // function
     // TODO: implement initState
     super.initState();
@@ -29,20 +30,22 @@ class _HomePageState extends State<HomePage> {
   loadData() async {
     // the file takes takes some time to load ,therefore we used await
     // inorder to load the files first, we have to give path in pubs.yml of our file folder in assats
-    var catalogJson = await rootBundle.loadString(
+    final catalogJson = await rootBundle.loadString(
         "assets/files/catalog.json"); // to load the json file in build method
     //  print(catalogJson); // present in sevrices library
-    var decodedData = jsonDecode(catalogJson);
-    // print(decodedData);
-    // decode means string to map , encode means map to string                // by decoding json you will get a dynamic value, may be map
+    final decodedData = jsonDecode(
+        catalogJson); // print(decodedData)                                                // decode means string to map , encode means map to string                // by decoding json you will get a dynamic value, may be map
     var productsData = decodedData["products"];
-    print(productsData);
+    CatalogModel.items = List.from(productsData)
+        .map<Item>((item) => Item.fromMap(item))
+        .toList();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     // The build method of a stateless widget is typically only called in three situations: the first time the widget is inserted in the tree, when the widget's parent changes its configuration, and when an InheritedWidget it depends on changes.
-    final dummylist = List.generate(50, ((index) => CatalogModel.items[0]));
+
     return Scaffold(
       appBar: AppBar(
         // constructor
@@ -54,13 +57,13 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: dummylist
+          itemCount: CatalogModel.items
               .length, // items are instant class members so , it requires to make class ststic // it gives the no of items to display
           itemBuilder: (context, index) {
             // used to display items
             return ItemWidget(
               // this requires item compulsary
-              item: dummylist[
+              item: CatalogModel.items[
                   index], // items is like array with index stored in catalogmodel class items[intex=0] means first item in array
             );
           },
